@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
@@ -26,7 +26,9 @@ namespace EventDressRental.Middleware
             catch (Exception ex)
             {
                 httpContext.Response.StatusCode = 500;
+                httpContext.Response.ContentType = "application/json";
                 _logger.LogError(ex + " call stack: " + ex.StackTrace);
+                await httpContext.Response.WriteAsync("{\"error\":\"Internal Server Error\"}");
             }
         }
     }
